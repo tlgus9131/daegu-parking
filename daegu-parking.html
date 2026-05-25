@@ -329,7 +329,7 @@ function addMessage(role, text) {
 
 async function getWeather() {
   try {
-    const res = await fetch('http://localhost:8000/api/weather');
+    const res = await fetch('https://daegu-parking.onrender.com/api/weather');
     const data = await res.json();
     const items = data.response?.body?.items?.item || [];
     const weather = {};
@@ -406,7 +406,7 @@ ${JSON.stringify(PARKING_DATA.slice(0, 40), null, 0)}
 한국어로 친절하게 답변하세요.`;
 
   try {
-    const response = await fetch('http://localhost:8000/api/chat', {
+    const response = await fetch('https://daegu-parking.onrender.com/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
