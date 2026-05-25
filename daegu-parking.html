@@ -14,6 +14,17 @@
     --text-muted: #7a7f9a; --border: rgba(255,255,255,0.07);
   }
   body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+  .sidebar-toggle { display: none; background: var(--accent); border: none; border-radius: 50%; width: 44px; height: 44px; color: #fff; font-size: 18px; cursor: pointer; position: fixed; bottom: 80px; left: 16px; z-index: 1001; box-shadow: 0 4px 12px rgba(79,142,247,0.4); }
+  @media (max-width: 768px) {
+    .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+    .sidebar { position: fixed; top: 0; right: -100%; width: 85vw; max-width: 330px; height: 100vh; z-index: 1000; transition: right 0.3s ease; }
+    .sidebar.open { right: 0; }
+    .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; }
+    .sidebar-overlay.visible { display: block; }
+    header { padding: 10px 14px; gap: 8px; }
+    .logo { font-size: 15px; }
+    .search-bar input { font-size: 13px; padding: 8px 10px; }
+  }
   header { padding: 14px 20px; display: flex; align-items: center; gap: 12px; background: var(--surface); border-bottom: 1px solid var(--border); z-index: 10; flex-shrink: 0; flex-wrap: wrap; }
   .logo { font-size: 18px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; white-space: nowrap; }
   .logo span { color: var(--text); font-weight: 300; }
@@ -73,6 +84,8 @@
   </div>
   <button class="btn btn-outline" onclick="useMyLocation()">📍 내 위치</button>
 </header>
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 <div class="main">
   <div id="map"></div>
   <div class="sidebar">
@@ -278,6 +291,13 @@ function useMyLocation() {
 function clearMarkers() { clusterer.clear(); markers = []; }
 
 document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') searchAddress(); });
+
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('visible');
+}
 
 // ===== AI 챗봇 =====
 const chatBtn = document.createElement('button');
